@@ -28,42 +28,51 @@ AddTodo.propTypes = {
 
 class TodoItem extends Component {
 	//todoListItem
+	constructor(){
+		super();
+		this.deleteHandler = this.deleteHandler.bind(this);  //性能问题 绑定this性能消耗
+	}
 	render(){
 		return (
-			<li onClick = {this.props.onClick} style = {{textDecoration:this.props.done == true ? 'line-through' : 'none'}}>{this.props.title} <button onClick ={this.delelteHandler.bind(this)}>Delete</button></li>
+			<li onClick = {this.props.onClick} style = {{textDecoration:this.props.done == true ? 'line-through' : 'none'}}>{this.props.title} 
+				<button onClick ={this.deleteHandler}>Delete</button>
+			</li>
 		)
 	}
-	delelteHandler(e){
+	deleteHandler(e){
 		 e.stopPropagation();
-		 this.props.delelteHandler();
+		 this.props.deleteHandler();
 		 
 	}
 }
 TodoItem.propTypes = {
-	onClick:PropTypes.func.isRequired,
-	done:PropTypes.bool.isRequired,
-	title:PropTypes.string.isRequired,
-	delelteHandler:PropTypes.func.isRequired
+	onClick: PropTypes.func.isRequired,
+	done: PropTypes.bool.isRequired,
+	title: PropTypes.string.isRequired,
+	deleteHandler: PropTypes.func.isRequired
 }
 class TodoList extends Component {
 	render(){
-		const todoList = this.props.todoList;
-		const filterState = this.props.filterState;
+		const {todoList,filterState}= this.props; //解构
 		let filterData = [];
 		switch(filterState){
 			case 'show_all':
-				filterData = todoList;break;
+				filterData = todoList;
+				break;
 			case 'show_finished':
-				filterData=todoList.filter(t => t.done);break;
+				filterData=todoList.filter(t => t.done);
+				break;
 			case 'show_active':
-				filterData= todoList.filter(t=> !t.done);break;
+				filterData= todoList.filter(t=> !t.done);
+				break;
 			default:
-				filterData = todoList;break;
+				filterData = todoList;
+				break;
 		}
 		return(
 			<ul>{
 				filterData.map((item,index)=>
-					<TodoItem {...item} key={index} onClick = {() => this.props.onClick(index)} delelteHandler = {() => this.props.delelteHandler(index)}/>   //onClick = {this.props.onClick(index)}区别
+					<TodoItem {...item} key={index} onClick = {() => this.props.onClick(index)} deleteHandler = {() => this.props.deleteHandler(index)}/>   //onClick = {this.props.onClick(index)}区别
 				)
 			}
 			</ul>
@@ -74,7 +83,8 @@ TodoList.propTypes = {
 	onClick:PropTypes.func.isRequired,
 	todoList:PropTypes.arrayOf(PropTypes.shape({
 		done:PropTypes.string.isRequired,title:PropTypes.string.isRequired
-	}).isRequired).isRequired
+	}).isRequired).isRequired,
+	filterState:PropTypes.string.isRequired
 }
 
 ///////////////////////////////todos列表
@@ -120,6 +130,7 @@ class App extends Component {
 			todoList:[{done:true,title:'aaa'},{done:false,title:'bbb'},{done:true,title:'ccc'},{done:false,title:'ddd'}]
 			,filterState:'show_all'
 		}
+		this.toggleTodoItem = this.toggleTodoItem.bind(this);
     }
     addTodoHandler(text){
     	const state = this.state;
@@ -141,7 +152,7 @@ class App extends Component {
     filterStateHandler(filterState = 'show_all'){
     	this.setState({"filterState":filterState});	
     }
-    delelteHandler(index){
+    deleteHandler(index){
     	this.state.todoList.splice(index,1);
     	this.setState({todoList:this.state.todoList});
     }
@@ -149,7 +160,7 @@ class App extends Component {
 		return (
 			<div>
 				<AddTodo addTodoHandler={text => this.addTodoHandler(text)}/>
-				<TodoList todoList={this.state.todoList} filterState={this.state.filterState} onClick = {index => this.toggleTodoItem(index)} delelteHandler = {index => this.delelteHandler(index)}/>
+				<TodoList {...this.state} onClick = {this.toggleTodoItem} deleteHandler = {this.deleteHandler.bind(this)}/>
 				<Footer onClick = {filterState => this.filterStateHandler(filterState)}/>
 			</div>
 		)
