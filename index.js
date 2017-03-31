@@ -2,6 +2,31 @@
 import React, {Component, PropTypes } from 'react'
 import {render,findDOMNode} from 'react-dom'
 
+
+
+// 本次遇到的问题：
+//	 1.通过子类王父类传值时不会将方法内部的作用域自动绑定到组件的实例上。
+//	解决方法：	1.通过在constructor中绑定this  
+// 				constructor(props) {
+//      			super(props);
+//       			this.onSearch = this.onSearch.bind(this)
+//   			}
+//  			2.使用Function.prototype.bind()
+//		         <Button type="primary" onClick={this.onSearch.bind(this)}>搜索</Button>//可能存在性能问题
+//
+//	 			3.ES7函数绑定语法
+//				通过::,收录在stage-0提案中，实际上::是Function.propotype.bind()的一种语法糖
+//
+//				4.使用箭头函数
+//				  <Button type="primary" onClick={(...args)=>{
+//                        this.onSearch( ...args)
+//                }}>搜索</Button>
+//	2.学会使用结构赋值
+//
+//  3.<Button type="primary" onClick={this.onSearch()}>搜索</Button>
+//   当通过这种方式去绑定函数时，表示立即执行函数。
+//
+//
 class AddTodo extends Component {
 	//添加todo
 	render(){
@@ -30,16 +55,17 @@ class TodoItem extends Component {
 	//todoListItem
 	constructor(){
 		super();
-		this.deleteHandler = this.deleteHandler.bind(this);  //性能问题 绑定this性能消耗
+		//this.deleteHandler = this.deleteHandler.bind(this);  //性能问题 绑定this性能消耗
 	}
 	render(){
 		return (
 			<li onClick = {this.props.onClick} style = {{textDecoration:this.props.done == true ? 'line-through' : 'none'}}>{this.props.title} 
-				<button onClick ={this.deleteHandler}>Delete</button>
+				<button onClick ={::this.deleteHandler}>Delete</button>
 			</li>
 		)
 	}
 	deleteHandler(e){
+
 		 e.stopPropagation();
 		 this.props.deleteHandler();
 		 
