@@ -67,6 +67,29 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // import React from 'react'
 
 
+	// 本次遇到的问题：
+	//	 1.通过子类王父类传值时不会将方法内部的作用域自动绑定到组件的实例上。
+	//	解决方法：	1.通过在constructor中绑定this  
+	// 				constructor(props) {
+	//      			super(props);
+	//       			this.onSearch = this.onSearch.bind(this)
+	//   			}
+	//  			2.使用Function.prototype.bind()
+	//		         <Button type="primary" onClick={this.onSearch.bind(this)}>搜索</Button>//可能存在性能问题
+	//
+	//	 			3.ES7函数绑定语法
+	//				通过::,收录在stage-0提案中，实际上::是Function.propotype.bind()的一种语法糖
+	//
+	//				4.使用箭头函数
+	//				  <Button type="primary" onClick={(...args)=>{
+	//                        this.onSearch( ...args)
+	//                }}>搜索</Button>
+	//	2.学会使用结构赋值
+	//
+	//  3.<Button type="primary" onClick={this.onSearch()}>搜索</Button>
+	//   当通过这种方式去绑定函数时，表示立即执行函数。
+	//
+	//
 	var AddTodo = function (_Component) {
 		_inherits(AddTodo, _Component);
 
@@ -121,10 +144,8 @@
 		function TodoItem() {
 			_classCallCheck(this, TodoItem);
 
-			var _this3 = _possibleConstructorReturn(this, (TodoItem.__proto__ || Object.getPrototypeOf(TodoItem)).call(this));
-
-			_this3.delelteHandler = _this3.delelteHandler.bind(_this3); //性能问题 绑定this性能消耗
-			return _this3;
+			return _possibleConstructorReturn(this, (TodoItem.__proto__ || Object.getPrototypeOf(TodoItem)).call(this));
+			//this.deleteHandler = this.deleteHandler.bind(this);  //性能问题 绑定this性能消耗
 		}
 
 		_createClass(TodoItem, [{
@@ -136,16 +157,17 @@
 					this.props.title,
 					_react2.default.createElement(
 						'button',
-						{ onClick: this.delelteHandler },
+						{ onClick: this.deleteHandler.bind(this) },
 						'Delete'
 					)
 				);
 			}
 		}, {
-			key: 'delelteHandler',
-			value: function delelteHandler(e) {
+			key: 'deleteHandler',
+			value: function deleteHandler(e) {
+
 				e.stopPropagation();
-				this.props.delelteHandler();
+				this.props.deleteHandler();
 			}
 		}]);
 
@@ -156,7 +178,7 @@
 		onClick: _react.PropTypes.func.isRequired,
 		done: _react.PropTypes.bool.isRequired,
 		title: _react.PropTypes.string.isRequired,
-		delelteHandler: _react.PropTypes.func.isRequired
+		deleteHandler: _react.PropTypes.func.isRequired
 	};
 
 	var TodoList = function (_Component3) {
@@ -173,8 +195,10 @@
 			value: function render() {
 				var _this5 = this;
 
-				var todoList = this.props.todoList;
-				var filterState = this.props.filterState; //解构
+				var _props = this.props,
+				    todoList = _props.todoList,
+				    filterState = _props.filterState; //解构
+
 				var filterData = [];
 				switch (filterState) {
 					case 'show_all':
@@ -200,8 +224,8 @@
 					filterData.map(function (item, index) {
 						return _react2.default.createElement(TodoItem, _extends({}, item, { key: index, onClick: function onClick() {
 								return _this5.props.onClick(index);
-							}, delelteHandler: function delelteHandler() {
-								return _this5.props.delelteHandler(index);
+							}, deleteHandler: function deleteHandler() {
+								return _this5.props.deleteHandler(index);
 							} }));
 					} //onClick = {this.props.onClick(index)}区别
 					)
@@ -216,7 +240,8 @@
 		onClick: _react.PropTypes.func.isRequired,
 		todoList: _react.PropTypes.arrayOf(_react.PropTypes.shape({
 			done: _react.PropTypes.string.isRequired, title: _react.PropTypes.string.isRequired
-		}).isRequired).isRequired
+		}).isRequired).isRequired,
+		filterState: _react.PropTypes.string.isRequired
 	};
 
 	///////////////////////////////todos列表
@@ -294,6 +319,7 @@
 				todoList: [{ done: true, title: 'aaa' }, { done: false, title: 'bbb' }, { done: true, title: 'ccc' }, { done: false, title: 'ddd' }],
 				filterState: 'show_all'
 			};
+			_this8.toggleTodoItem = _this8.toggleTodoItem.bind(_this8);
 			return _this8;
 		}
 
@@ -326,8 +352,8 @@
 				this.setState({ "filterState": filterState });
 			}
 		}, {
-			key: 'delelteHandler',
-			value: function delelteHandler(index) {
+			key: 'deleteHandler',
+			value: function deleteHandler(index) {
 				this.state.todoList.splice(index, 1);
 				this.setState({ todoList: this.state.todoList });
 			}
@@ -342,9 +368,7 @@
 					_react2.default.createElement(AddTodo, { addTodoHandler: function addTodoHandler(text) {
 							return _this9.addTodoHandler(text);
 						} }),
-					_react2.default.createElement(TodoList, { todoList: this.state.todoList, filterState: this.state.filterState, onClick: this.toggleTodoItem, delelteHandler: function delelteHandler(index) {
-							return _this9.delelteHandler(index);
-						} }),
+					_react2.default.createElement(TodoList, _extends({}, this.state, { onClick: this.toggleTodoItem, deleteHandler: this.deleteHandler.bind(this) })),
 					_react2.default.createElement(Footer, { onClick: function onClick(filterState) {
 							return _this9.filterStateHandler(filterState);
 						} })
