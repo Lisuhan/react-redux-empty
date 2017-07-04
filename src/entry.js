@@ -1,20 +1,25 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux' 
-import App from './containers/App'
-import todoApp from './redux/reducers'
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux'; 
+import App from './containers/App';
+import reducers from './redux/reducers';
+import thunk from 'redux-thunk';
 
-const store = createStore(todoApp);
-console.log(store.getState())
-let unsubscribe = store.subscribe(() =>
-  console.log(store.getState())
-)
+const rootReducer = combineReducers(reducers);
+const store = createStore(
+	rootReducer,
+	applyMiddleware(thunk)
+);
+// let unsubscribe = store.subscribe(() =>
+//   console.log(store.getState())
+// )
 
-const elem = document.getElementById('content');
+const dom = document.getElementById('content');
 render(
 	<Provider store = {store}>
 		<App/>
 	</Provider>,
-	elem
+	dom
 )
+
