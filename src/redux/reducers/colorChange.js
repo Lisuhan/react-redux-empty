@@ -18,7 +18,7 @@ export default function Color(state = defaultState, action){
 			const color = colorCollection[Math.ceil(Math.random() * colorCollection.length)];
 			return state.update('color', () => {return color}).update('isFetching',()=>{return false});
 		case actionsTypes.CHANGE_COLOR_FAILURE:
-			return '';
+			return state;
 		default:
 			return state;
 	}
