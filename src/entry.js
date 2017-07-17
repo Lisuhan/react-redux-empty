@@ -15,11 +15,11 @@ const store = createStore(
 //   console.log(store.getState())
 // )
 
-const dom = document.getElementById('content');
+const Dom = document.getElementById('content');
 render(
 	<Provider store = {store}>
 		<App/>
 	</Provider>,
-	dom
+	Dom
 )
 
