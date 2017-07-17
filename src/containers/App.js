@@ -29,4 +29,5 @@ const mapDispatchToProps = (dispatch) => ({
 App.contextTypes = {
 	
 }
+
 export default connect(mapStateToProps,mapDispatchToProps)(App);
