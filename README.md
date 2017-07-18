@@ -4,3 +4,6 @@
 *  `npm install`
 *  `npm run dev`
 
+# 安装json-server 模拟请求
+*　npm i -g json-server 
+*  `json-server db.json`
