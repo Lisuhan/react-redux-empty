@@ -1,7 +1,7 @@
 import React,{ Component , PropTypes } from 'react';
 import { connect } from 'react-redux';
-import ColorChange from '../components/ColorChange';
-import Actions from '../redux/actions/index';
+import ColorChange from '../../components/ColorChange';
+import Actions from '../../redux/actions/index';
 import Immutable from 'immutable';
 import { bindActionCreators } from 'redux';
 

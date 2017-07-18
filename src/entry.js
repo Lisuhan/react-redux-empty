@@ -31,14 +31,19 @@ const rootConfig = {
 	}]
 }
 
+
 const Dom = document.getElementById('content');
-render(
-	<Provider store = {store}>
+/*<Provider store = {store}>
 	  	<Router
             routes={rootConfig}
             history={browserHistory} >
             <App/>
 		</Router>
+	</Provider>
+*/
+render(
+	<Provider store = {store}>
+            <App/>
 	</Provider>,
 	Dom
 )
