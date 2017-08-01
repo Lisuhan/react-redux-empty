@@ -17,14 +17,22 @@ module.exports = {
 		]
 	},
 	output: {
-		filename: "main.bundle.js",
-		path: __dirname + "/dist",
-		publicPath:'/dist'
+		filename: "[name].bundle.js",
+		path: path.join(__dirname, "/dist"),
+		publicPath:'/dist',
+		chunkFilename: '[name].[chunkhash:5].chunk.js',
 	},
 	devServer : {
 		publicPath : '/dist',
 		filename : 'main.bundle.js',
 		host : '0.0.0.0',
 		port : 8080
-	}
+	},
+	plugins: [
+	// //必须配置，react的公共模块
+	//     new webpack.optimize.CommonsChunkPlugin({
+	//       names: ['vendor'],
+	//       filename: 'vendor.js'
+	//     })
+	],
 }

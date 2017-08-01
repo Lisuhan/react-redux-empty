@@ -1,50 +1,64 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers, applyMiddleware } from 'redux'; 
-import App from './containers/App/App';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import App from './App';
 import reducers from './redux/reducers';
 import thunk from 'redux-thunk';
-import { Router, browserHistory } from 'react-router';
+import { Router, IndexRoute ,browserHistory } from 'react-router';
 
 const rootReducer = combineReducers(reducers);
 const store = createStore(
-	rootReducer,				//reducers
-	applyMiddleware(thunk)      //中间件
+    rootReducer, //reducers
+    applyMiddleware(thunk) //middleware
 );
 
 //路由跳转
 const getPageBundle = (pageName) => {
-  const first = pageName.substring(0,1).toUpperCase();
-  const end = pageName.substring(1, pageName.length);
-  const pages = first + end;
-  return require("./containers/" + pages + '/index');
+    const first = pageName.substring(0, 1).toUpperCase();
+    const end = pageName.substring(1, pageName.length);
+    const pages = first + end;
+    return "./containers/" + pages + '/index';
 }
 
-const rootConfig = {
-	path:'/',
-	childRoutes:[{
-		path:'*',
-		getComponents(nextState,callback){
-			debugger
-		}
-	}]
+const getRouteConfig = (options, getNextState) => {
+    let routeConfig = {
+        path: '/',
+        childRoutes: [{
+            path: '*',
+            getComponent(nextState, callback) {
+                try {
+                    var pathName = nextState.location.pathname;
+                    var pageName = pathName.indexOf("/") != -1 ? pathName.slice(1) : pathName;
+                    var pageBundle = getPageBundle(pageName);
+                } catch (e) {
+                    return callback(e);
+                }
+               require.ensure([], function (require) {
+                callback(null, require(pageBundle))
+              })
+            }
+        }]
+    }
+    routeConfig = Object.assign(routeConfig, options);
+    return routeConfig;
 }
 
+const routeConfig = getRouteConfig({
+    component: App,
+    indexRoute: {
+        onEnter: (nextState, replace) => replace('/home')
+    }
+})
 
 const Dom = document.getElementById('content');
-/*<Provider store = {store}>
-	  	<Router
-            routes={rootConfig}
-            history={browserHistory} >
-            <App/>
-		</Router>
-	</Provider>
-*/
-render(
+
+ReactDOM.render(
 	<Provider store = {store}>
-            <App/>
+        <Router
+            routes={routeConfig}
+            history={browserHistory}>
+        </Router>
 	</Provider>,
 	Dom
 )
-

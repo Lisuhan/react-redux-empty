@@ -1,18 +1,20 @@
-import React ,{Component,PropTypes} from 'react'
+import React ,{ Component } from 'react';
 
 class ColorChange extends Component {
-	//添加todo
-	constructor(props,context){
-		super(props,context);
+
+	constructor(props){
+		super(props);
 	}
+
 	render(){
+		const { colorCollection ,isFetching } = this.props.data,
+			 color = colorCollection[ Math.ceil(Math.random() * (colorCollection.length - 1))];
 
 		const style = {
 			width:'200px',
 			height:'200px',
-			backgroundColor:this.props.data.color
+			backgroundColor:color
 		}
-		const {isFetching} = this.props.data;
 		return (
 			isFetching ? 
 			<span>Loading...</span> :
@@ -23,13 +25,13 @@ class ColorChange extends Component {
 		)
 	}
 	changeColorHandler(e){
-		//this.props.addTodoHandler();
-		this.props.actions && this.props.actions.fetch_ColorChangeHandler();
+		this.props.actions.fetch_ColorChangeHandler();
+	}
+	componentDidMount(){
+		this.props.actions.fetch_ColorChangeHandler();
 	}
 }
 
-// ColorChange.propTypes = {
-// 	fetch_ColorChangeHandler:PropTypes.func.isRequired
-// }
+
 
 export default ColorChange;

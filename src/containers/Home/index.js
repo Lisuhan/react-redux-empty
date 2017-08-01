@@ -1,10 +1,11 @@
-import React,{ Component , PropTypes } from 'react';
+import React,{ Component } from 'react';
 import { connect } from 'react-redux';
 import ColorChange from '../../components/ColorChange';
 import Actions from '../../redux/actions/index';
 import Immutable from 'immutable';
 import { bindActionCreators } from 'redux';
-
+import PropTypes from 'prop-types';
+ 
 
 //路由下的App文件
 class App extends Component {
@@ -14,21 +15,11 @@ class App extends Component {
 	render () {
 		return (
 			<div>
-        		<ColorChange {...this.props}/>
+        		Home✌️
 			</div>
 		)
 	}
 
 }
-const mapStateToProps = (state) => ({
-  	data:state.colorChange.toObject()
- })
-const mapDispatchToProps = (dispatch) => ({
-    actions: bindActionCreators(Actions, dispatch)
-})
 
-App.contextTypes = {
-	
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default App;
