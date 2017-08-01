@@ -8,15 +8,13 @@ import PropTypes from 'prop-types';
  
 
 //路由下的App文件
-class App extends Component {
+class Demo extends Component {
 	constructor(props) {
         super(props);
     }
 	render () {
-		return (
-			<div>
-        		<ColorChange {...this.props}/>
-			</div>
+		return (		
+        	<ColorChange {...this.props}/>
 		)
 	}
 
@@ -28,8 +26,8 @@ const mapDispatchToProps = (dispatch) => ({
     actions: bindActionCreators(Actions, dispatch)
 })
 
-App.propTypes = {
+Demo.propTypes = {
 	
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(Demo);

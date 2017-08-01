@@ -9,8 +9,8 @@ module.exports = {
 				exclude : /node_modules/
 			}
 			, {
-		      test: /\.css?$/,
-		      loaders: [ 'style', 'css'],
+		      test: /\.(css|scss)$/,
+		      loaders: [ 'style-loader', 'css-loader', 'sass-loader'],
 		      include: __dirname,
 		      exclude : /node_modules/
 		    }
