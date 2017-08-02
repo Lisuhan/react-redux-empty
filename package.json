@@ -22,6 +22,7 @@
     "redux-thunk": ""
   },
   "devDependencies": {
+    "autoprefixer": "^7.1.2",
     "babel-core": "^6.4.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-add-module-exports": "^0.2.1",
@@ -30,7 +31,10 @@
     "babel-preset-stage-0": "^6.22.0",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^2.30.1",
     "node-sass": "^4.5.3",
+    "postcss-loader": "^2.0.6",
     "react-router-dom": "^4.1.2",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.13.0",
