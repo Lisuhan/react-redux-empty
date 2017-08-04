@@ -1,0 +1,10 @@
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex; }
+
+nav {
+  width: 15%; }
+
+section {
+  width: 85%; }

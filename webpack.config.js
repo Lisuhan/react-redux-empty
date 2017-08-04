@@ -1,4 +1,5 @@
 var path = require("path");
+var webpack = require('webpack');
 
 var HtmlWebpackPlugin = require('html-webpack-plugin'); //自动引用了你打包后的JS文件
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -6,16 +7,27 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
 	entry : './src/entry.js',
 	module : {
-		loaders : [
+		rules : [
 			{
 				test : /\.js$/,
-				loader : 'babel-loader',
+				use : 'babel-loader',
 				exclude : /node_modules/
 			}
 			, {
-		        test: /\.(css|scss)$/,
-		        loaders: ['style-loader', 'css-loader', 'sass-loader'],
+		        test: /\.css$/,
+		        use: ExtractTextPlugin.extract({
+		        	fallback:'style-loader',
+					use:['css-loader?sourceMap','postcss-loader']
+		        }),
 		        exclude : /node_modules/
+		    }
+		    ,{
+		    	test: /\.scss$/,
+		    	loader: ExtractTextPlugin.extract({
+		        	fallback:'style-loader',
+					use:['css-loader?sourceMap','postcss-loader', 'sass-loader'],
+		        }),
+		    	exclude : /node_modules/
 		    }
 		]
 	},
@@ -34,14 +46,16 @@ module.exports = {
 		historyApiFallback: true,//不跳转
 	},
 	plugins: [
-	//     必须配置，react的公共模块
-	//     new webpack.optimize.CommonsChunkPlugin({
-	//       names: ['vendor'],
-	//       filename: 'vendor.js'
-	//     })
-		 new HtmlWebpackPlugin({
+		
+		new webpack.optimize.CommonsChunkPlugin({  //提取公共模块
+	        name: "common",
+	        minChunks: Infinity
+	    }),
+		new HtmlWebpackPlugin({						//插入模板中
+			filename:'index.html',
 	      	template: __dirname + "/index.html"
 	    }),
+		new ExtractTextPlugin("css/[name].css",{disable: false,allChunks: true}),//分离css
 	],
 	devtool: 'eval-source-map',
 }
