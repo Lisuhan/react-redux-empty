@@ -14,6 +14,10 @@ module.exports = {
 				exclude : /node_modules/
 			}
 			, {
+			  	test: /containers\/([^/]+)\/?([^/]*)\.js?$/,
+			  	use: ['bundle-loader?lazy', 'babel-loader']
+			 }
+			, {
 		        test: /\.css$/,
 		        use: ExtractTextPlugin.extract({
 		        	fallback:'style-loader',
@@ -21,9 +25,9 @@ module.exports = {
 		        }),
 		        exclude : /node_modules/
 		    }
-		    ,{
+		    , {
 		    	test: /\.scss$/,
-		    	loader: ExtractTextPlugin.extract({
+		    	use: ExtractTextPlugin.extract({
 		        	fallback:'style-loader',
 					use:['css-loader?sourceMap','postcss-loader', 'sass-loader'],
 		        }),
@@ -49,7 +53,7 @@ module.exports = {
 		
 		new webpack.optimize.CommonsChunkPlugin({  //提取公共模块
 	        name: "common",
-	        minChunks: Infinity
+	        minChunks: 2
 	    }),
 		new HtmlWebpackPlugin({						//插入模板中
 			filename:'index.html',

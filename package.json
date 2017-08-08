@@ -13,6 +13,7 @@
   "dependencies": {
     "immutable": "",
     "react": "^15.6.0",
+    "react-bootstrap": "^0.31.2",
     "react-dom": "^15.6.0",
     "react-redux": "^4.0.6",
     "react-router": "^4.1.2",
@@ -29,6 +30,7 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.22.0",
+    "bundle-loader": "^0.5.5",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^3.0.0",
