@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import reducers from './redux/reducers';
 import thunk from 'redux-thunk';
-import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch,} from 'react-router-dom';
 // import { renderRoutes } from 'react-router-config';
 import Bundle from './utils/bundle';
 import App from './App';
@@ -18,7 +18,8 @@ const store = createStore(
 );
 
 
-class RoutePage extends React.Component{
+
+class RoutePage extends React.PureComponent{
 
     constructor(props){
         super(props)
@@ -42,22 +43,6 @@ class RoutePage extends React.Component{
         )
     }
 }
-
-
-// const routeConfig = [{
-//     path:'/',
-//     component:App,
-//     routes:[
-//         {
-//             path:'/demo',
-//             exact:true,
-//             component:Demo
-//         },{
-//             path:'/home',
-//             component:Home
-//         }   
-//     ]
-// }]
 
 
 ReactDOM.render(

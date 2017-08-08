@@ -1,7 +1,7 @@
 var path = require("path");
 var webpack = require('webpack');
 
-var HtmlWebpackPlugin = require('html-webpack-plugin'); //自动引用了你打包后的JS文件
+var HtmlWebpackPlugin = require('html-webpack-plugin'); //自动引用打包后的JS文件
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -13,11 +13,13 @@ module.exports = {
 				use : 'babel-loader',
 				exclude : /node_modules/
 			}
-			, {
-			  	test: /containers\/([^/]+)\/?([^/]*)\.js?$/,
-			  	use: ['bundle-loader?lazy', 'babel-loader']
+			,{
+			  	test:/containers(\/|\\)[^(\/|\\)]+(\/|\\)index\.js$/,
+			  	use: ['bundle-loader?lazy', 'babel-loader'],
+			  	include: __dirname + '/src/containers',
+			  	exclude : /node_modules/
 			 }
-			, {
+			,{
 		        test: /\.css$/,
 		        use: ExtractTextPlugin.extract({
 		        	fallback:'style-loader',
@@ -25,7 +27,7 @@ module.exports = {
 		        }),
 		        exclude : /node_modules/
 		    }
-		    , {
+		    ,{
 		    	test: /\.scss$/,
 		    	use: ExtractTextPlugin.extract({
 		        	fallback:'style-loader',
@@ -33,6 +35,14 @@ module.exports = {
 		        }),
 		    	exclude : /node_modules/
 		    }
+		    ,{	
+             	test: /\.(png|jpg|gif)$/,   					// 图片加载器，同file-loader，更适合图片，可以将较小的图片转成base64，减少http请求  													
+             	use: 'url-loader?limit=8192&name=./images/[hash:5].[name].[ext]',// 将小于8192byte的图片转成base64码
+            }
+            ,{
+	            test: /\.(woff|woff2|svg|eot|ttf)\??.*$/,
+	            use: 'file-loader?name=./fonts/[hash:5].[name].[ext]',
+	        },
 		]
 	},
 	output: {
@@ -47,7 +57,7 @@ module.exports = {
 		contentBase: "./dist",
 		host : '0.0.0.0',
 		port : 8080,
-		historyApiFallback: true,//不跳转
+		historyApiFallback: true//不跳转
 	},
 	plugins: [
 		

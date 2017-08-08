@@ -1,4 +1,6 @@
 import React ,{ Component } from 'react';
+import PropTypes from 'prop-types';
+
 
 class ColorChange extends Component {
 
@@ -32,6 +34,10 @@ class ColorChange extends Component {
 	}
 }
 
+ColorChange.propTypes = {
+	colorCollection:PropTypes.array,
+	isFetching:PropTypes.bool
+}
 
 
 export default ColorChange;
