@@ -16,6 +16,7 @@ class App extends Component {
 		return (
 			<div>
         		Home✌️
+        		<span className="icon-cameraaddfill"/>
 			</div>
 		)
 	}

@@ -3,6 +3,7 @@ import Header from '../components/common/header'
 // import Demo from '../containers/Demo';
 // import { renderRoutes } from 'react-router-config';
 import './base.scss';
+import '../style/index.css';
 //app入口
 class App extends Component {
 
