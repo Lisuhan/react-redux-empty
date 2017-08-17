@@ -3,6 +3,37 @@ var webpack = require('webpack');
 
 var HtmlWebpackPlugin = require('html-webpack-plugin'); //自动引用打包后的JS文件
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var buildProd = process.env.NODE_ENV === "production"; //是否要上线环境
+
+
+/*plugins list*/
+const plugins = [
+	new webpack.optimize.CommonsChunkPlugin({  //提取公共模块
+        name: "common",
+        minChunks: 2
+    }),
+	new HtmlWebpackPlugin({						//插入模板中
+		filename:'index.html',
+      	template: __dirname + "/index.html"
+    }),
+	new ExtractTextPlugin("css/[name].css",{disable: false,allChunks: true}),//分离css
+];
+if(buildProd){
+	console.log(buildProd);
+	plugins.push(
+		new webpack.optimize.UglifyJsPlugin({
+			compress: {
+			    warnings: false,
+			    screw_ie8: false
+			},
+			mangle: { screw_ie8: false },
+			output: { screw_ie8: false },
+			sourceMap: true
+		})
+	)
+}
+
+
 
 module.exports = {
 	entry : './src/entry.js',
@@ -46,10 +77,14 @@ module.exports = {
 		]
 	},
 	output: {
-		filename: "[name].bundle.js",
+		filename: buildProd
+			? '[name].bundle.min.js'
+			: '[name].bundle.js',
+		chunkFilename: buildProd
+			? '[name].[chunkhash:5].chunk.min.js'
+			: '[name].[chunkhash:5].chunk.js',
 		path: __dirname + "/dist",
-		publicPath:'/dist',
-		chunkFilename: '[name].[chunkhash:5].chunk.js',
+		publicPath:'/dist'
 	},
 	devServer : {
 		publicPath : '/dist',
@@ -59,17 +94,6 @@ module.exports = {
 		port : 8080,
 		historyApiFallback: true//不跳转
 	},
-	plugins: [
-		
-		new webpack.optimize.CommonsChunkPlugin({  //提取公共模块
-	        name: "common",
-	        minChunks: 2
-	    }),
-		new HtmlWebpackPlugin({						//插入模板中
-			filename:'index.html',
-	      	template: __dirname + "/index.html"
-	    }),
-		new ExtractTextPlugin("css/[name].css",{disable: false,allChunks: true}),//分离css
-	],
-	devtool: 'eval-source-map',
+	plugins: plugins,
+	devtool: buildProd ? false : 'eval-source-map',
 }
