@@ -11,6 +11,7 @@ import App from './App';
 import Demo from './containers/Demo';
 // import Home from './containers/Home';
 
+
 const rootReducer = combineReducers(reducers);
 const store = createStore(
     rootReducer, //reducers
