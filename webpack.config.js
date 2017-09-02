@@ -19,7 +19,6 @@ const plugins = [
 	new ExtractTextPlugin("css/[name].css",{disable: false,allChunks: true}),//分离css
 ];
 if(buildProd){
-	console.log(buildProd);
 	plugins.push(
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
@@ -90,8 +89,8 @@ module.exports = {
 		publicPath : '/dist',
 		filename : 'main.bundle.js',
 		contentBase: "./dist",
-		host : '0.0.0.0',
-		port : 8080,
+		host : '127.0.0.1',
+		port : 8000,
 		historyApiFallback: true//不跳转
 	},
 	plugins: plugins,
