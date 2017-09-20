@@ -9,12 +9,13 @@ var buildProd = process.env.NODE_ENV === "production"; //是否要上线环境
 /*plugins list*/
 const plugins = [
 	new webpack.optimize.CommonsChunkPlugin({  //提取公共模块
-        name: "common",
-        minChunks: 2
+        name: "vendor",
+        minChunks: Infinity
     }),
 	new HtmlWebpackPlugin({						//插入模板中
 		filename:'index.html',
-      	template: __dirname + "/index.html"
+		template: __dirname + "/index.html",
+		inject:'body'
     }),
 	new ExtractTextPlugin("css/[name].css",{disable: false,allChunks: true}),//分离css
 ];
@@ -30,12 +31,19 @@ if(buildProd){
 			sourceMap: true
 		})
 	)
+}else{
+	plugins.push(
+		new webpack.HotModuleReplacementPlugin()
+	)
 }
 
 
 
 module.exports = {
-	entry : './src/entry.js',
+	entry : {
+		vendor:['react','redux','react-redux','react-dom','immutable'],
+		app:'./src/entry.js'
+	},
 	module : {
 		rules : [
 			{
@@ -43,12 +51,6 @@ module.exports = {
 				use : 'babel-loader',
 				exclude : /node_modules/
 			}
-			,{
-			  	test:/containers(\/|\\)[^(\/|\\)]+(\/|\\)index\.js$/,
-			  	use: ['bundle-loader?lazy', 'babel-loader'],
-			  	include: __dirname + '/src/containers',
-			  	exclude : /node_modules/
-			 }
 			,{
 		        test: /\.css$/,
 		        use: ExtractTextPlugin.extract({
@@ -75,6 +77,11 @@ module.exports = {
 	        },
 		]
 	},
+	resolve:{
+		alias:{
+			'&':path.resolve(__dirname, "src")
+		}
+	},
 	output: {
 		filename: buildProd
 			? '[name].bundle.min.js'
@@ -82,16 +89,15 @@ module.exports = {
 		chunkFilename: buildProd
 			? '[name].[chunkhash:5].chunk.min.js'
 			: '[name].[chunkhash:5].chunk.js',
-		path: __dirname + "/dist",
-		publicPath:'/dist'
+		path: path.resolve(__dirname,"dist/"),
 	},
 	devServer : {
-		publicPath : '/dist',
-		filename : 'main.bundle.js',
-		contentBase: "./dist",
+		publicPath : '/',
+	//	contentBase:path.resolve(__dirname, "dist/"),
 		host : '127.0.0.1',
 		port : 8000,
-		historyApiFallback: true//不跳转
+		hot : true,
+		historyApiFallback: true,//不跳转
 	},
 	plugins: plugins,
 	devtool: buildProd ? false : 'eval-source-map',

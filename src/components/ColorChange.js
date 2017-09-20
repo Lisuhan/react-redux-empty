@@ -22,11 +22,11 @@ class ColorChange extends Component {
 			<span>Loading...</span> :
 			<div>
 				<div style={style}></div>
-				<button onClick ={::this.changeColorHandler}>changeColor</button>
+				<button onClick ={this.changeColorHandler}>changeColor</button>
 			</div>
 		)
 	}
-	changeColorHandler(e){
+	changeColorHandler = e =>{
 		this.props.actions.fetch_ColorChangeHandler();
 	}
 	componentDidMount(){
