@@ -17,14 +17,17 @@ const plugins = [
         inject: "body",
     }),
     new ExtractTextPlugin("css/[name].css", {
+        //分离css
         disable: false,
         allChunks: true,
-    }), //分离css
+    }),
     new webpack.DllReferencePlugin({
+        //使用dll文件
         context: __dirname,
         manifest: require("./manifest.json"),
     }),
     new AddAssetHtmlPlugin({
+        //dll插入模板
         filepath: require.resolve(__dirname + "/dll/dll.js"),
         includeSourcemap: false,
     }),
