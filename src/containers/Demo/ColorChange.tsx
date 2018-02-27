@@ -1,12 +1,15 @@
 import React, { Component } from "react"
-import PropTypes from "prop-types"
 
-class ColorChange extends Component {
-    constructor(props) {
+interface Props{
+    data:any,
+    actions:any
+}
+class ColorChange extends Component<Props, {}> {
+    constructor(props:Props) {
         super(props)
     }
 
-    render() {
+    render(): JSX.Element {
         const { colorCollection, isFetching } = this.props.data,
             color =
                 colorCollection[
@@ -27,7 +30,7 @@ class ColorChange extends Component {
             </div>
         )
     }
-    changeColorHandler = e => {
+    changeColorHandler = (e:React.MouseEvent<HTMLButtonElement>)=> {
         this.props.actions.fetch_ColorChangeHandler()
     }
     componentDidMount() {

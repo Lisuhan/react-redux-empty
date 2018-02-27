@@ -55,7 +55,7 @@ if (buildProd) {
 
 module.exports = {
     entry: {
-        app: "./src/entry.js",
+        app: "./src/entry",
     },
     module: {
         rules: [
