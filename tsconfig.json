@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+      "module": "es6",
+      "target": "es6",
+      "lib": ["es6", "dom"],
+      "sourceMap": true,
+      "allowJs": true,
+      "jsx": "preserve",
+      "moduleResolution": "node",
+      "forceConsistentCasingInFileNames": true,
+      "allowSyntheticDefaultImports":true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "noImplicitAny": true,
+      "experimentalDecorators": true,
+      "strictNullChecks": true,
+      "suppressImplicitAnyIndexErrors": true,
+      "noUnusedLocals": true,
+      "baseUrl": "src",
+      "paths": {
+        "&/*": ["*"]
+      }
+    }  
+    ,"exclude": [
+        "node_modules",
+        "dist",
+        "extras",
+        "webpack"
+      ]
+    
+}
+  

@@ -65,10 +65,19 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
+                test: /\.tsx?$/,
+                loader: "awesome-typescript-loader",
+                options: {
+                    useBabel: true,
+                    useCache: true,
+                },
+                exclude: /node_modules/
+            },
+            {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
-                    use: ["css-loader?sourceMap", "postcss-loader"],
+                    use: ["css-loader", "postcss-loader"],
                 }),
                 exclude: /node_modules/,
             },
@@ -77,7 +86,7 @@ module.exports = {
                 use: ExtractTextPlugin.extract({
                     fallback: "style-loader",
                     use: [
-                        "css-loader?sourceMap",
+                        "css-loader",
                         "postcss-loader",
                         "sass-loader",
                     ],
@@ -96,6 +105,7 @@ module.exports = {
         ],
     },
     resolve: {
+        extensions: [".ts", ".tsx", ".js"],
         alias: {
             "&": path.resolve(__dirname, "src"),
         },
@@ -116,5 +126,5 @@ module.exports = {
         historyApiFallback: true, //不跳转
     },
     plugins: plugins,
-    devtool: buildProd ? false : "eval-source-map",
+    devtool: buildProd ? false : "source-map",
 }
