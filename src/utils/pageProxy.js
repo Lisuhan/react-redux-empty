@@ -20,7 +20,6 @@ class PageProxy extends Component {
         this.loadAsyncPages(this.getPagePath());
     }
     
-
     componentWillReceiveProps(nextProps) {
         let currentPath = this.getPagePath();
         let nextPath = this.getPagePath(nextProps);
@@ -35,14 +34,14 @@ class PageProxy extends Component {
         let PageComponent = state[path];
         return(
             <App {...this.props}>
-                {PageComponent ? <PageComponent {...this.props} /> : null}
+                {PageComponent ? <PageComponent {...this.props}/> : null}
             </App>
         )
     }
 
     loadAsyncPages(path){
         import(
-            /*webpackMode:"lazy",webpackChunkName:"[request]"*/`&/containers/${path}/index`
+            /*webpackMode:"lazy",webpackChunkName:"[request]"*/`&/containers/${path}`
         ).then(Component => {
            this.setState({
                [path]:Component,

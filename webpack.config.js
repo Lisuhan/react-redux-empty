@@ -6,7 +6,6 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin") //分离css为�
 const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin") //往html中添加dll文件
 const CleanWebpackPlugin = require("clean-webpack-plugin") //删除dist下的缓存
 
-const buildProd = process.env.NODE_ENV === "production" //是否要上线环境
 
 /*plugins list*/
 const plugins = [
@@ -44,14 +43,13 @@ module.exports = {
         app: "./src/entry",
     },
     module: {
-        rules: [
-            {
-                test: /\.js$/,
+        rules: [{
+                test: /\.(jsx?)$/,
                 use: "babel-loader",
                 exclude: /node_modules/,
             },
             {
-                test: /\.tsx?$/,
+                test: /\.(ts|tsx)$/,
                 loader: "awesome-typescript-loader",
                 options: {
                     useBabel: true,
@@ -81,8 +79,7 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|gif)$/, // 图片加载器，同file-loader，更适合图片，可以将较小的图片转成base64，减少http请求
-                use:
-                    "url-loader?limit=8192&name=./images/[hash:5].[name].[ext]", // 将小于8192byte的图片转成base64码
+                use: "url-loader?limit=8192&name=./images/[hash:5].[name].[ext]", // 将小于8192byte的图片转成base64码
             },
             {
                 test: /\.(woff|woff2|svg|eot|ttf)\??.*$/,
@@ -91,16 +88,14 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".js"],
+        extensions: [".ts", ".tsx", ".js", "jsx"],
         alias: {
             "&": path.resolve(__dirname, "src"),
         },
     },
     output: {
-        filename: buildProd ? "[name].bundle.min.js" : "[name].bundle.js",
-        chunkFilename: buildProd
-            ? "[name].[chunkhash:5].chunk.min.js"
-            : "[name].[chunkhash:5].chunk.js",
+        filename: "[name].bundle.js",
+        chunkFilename: "[name].[chunkhash:5].chunk.js",
         path: path.resolve(__dirname, "dist/"),
     },
     devServer: {
