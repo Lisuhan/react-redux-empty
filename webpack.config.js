@@ -36,24 +36,9 @@ const plugins = [
         verbose: true,
         dry: false,
     }),
+    new webpack.HotModuleReplacementPlugin()
     // new FriendlyErrorsWebpackPlugin()
 ]
-if (buildProd) {
-    plugins.push(
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                screw_ie8: false,
-            },
-            mangle: { screw_ie8: false },
-            output: { screw_ie8: false },
-            sourceMap: true,
-        })
-    )
-} else {
-    plugins.push(new webpack.HotModuleReplacementPlugin())
-}
-
 module.exports = {
     entry: {
         app: "./src/entry",
@@ -127,5 +112,4 @@ module.exports = {
         historyApiFallback: true, //不跳转
     },
     plugins: plugins,
-    devtool: buildProd ? false : "source-map",
 }
