@@ -36,7 +36,7 @@ const plugins = [
         verbose: true,
         dry: false,
     }),
-    new FriendlyErrorsWebpackPlugin()
+    // new FriendlyErrorsWebpackPlugin()
 ]
 if (buildProd) {
     plugins.push(
