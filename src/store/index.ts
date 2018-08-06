@@ -1,4 +1,4 @@
-import colorChange from '&/containers/Demo/store';
+import colorChange from '&/containers/Demo/store/reducers';
 
 const rootReducer = {
 	colorChange

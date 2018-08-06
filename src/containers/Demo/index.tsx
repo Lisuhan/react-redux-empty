@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import ColorChange from "./ColorChange"
+import ColorChange from "./component/ColorChange"
 import Actions from "./store"
 import { bindActionCreators } from "redux"
 //路由下的App文件

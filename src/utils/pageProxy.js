@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import App from "App";
+import App from "&/App";
 
 const tabPattern = "/~/";
 const currentPage = "$$currentPage";

@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import ImageShow from "components/imageShow"
+import ImageShow from "&/components/imageShow"
 
 //路由下的App文件
 class Demo3 extends Component<{}, {}> {
