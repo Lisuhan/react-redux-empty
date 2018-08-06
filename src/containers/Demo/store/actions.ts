@@ -1,4 +1,4 @@
-import * as actionTypes from "../../constants/actionTypes"
+import * as actionTypes from "./actionTypes"
 
 export function fetch_ColorChangeHandler(param: any) {
     return (dispatch: any, getState: any) => {

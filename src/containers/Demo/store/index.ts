@@ -1,4 +1,4 @@
-import * as ColorChange from './colorAction'
+import * as ColorChange from './actions'
 
 const actions = Object.assign({},
 	ColorChange
