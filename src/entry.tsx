@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import reducers from './store';
+import reducers from '&/store';
 import thunk from 'redux-thunk';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import PageProxy from './utils/pageProxy';
-import App from './App';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import PageProxy from '&/utils/pageProxy';
+import App from './app';
 
 const rootReducer = combineReducers(reducers);
 const store = createStore(

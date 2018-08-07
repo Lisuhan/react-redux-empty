@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import App from "&/App";
+import React, { Component } from 'react';
+import App from '&/app';
 
 const tabPattern = '/~/';
-const currentPage = "$$currentPage";
-const df = "default";
+const currentPage = '$$currentPage';
+const df = 'default';
 
 class PageProxy extends Component {
     state = {};
 
     getPagePath(props) {
         let { match: { url } } = props || this.props;
-        let path = url.substr(1) || "home";
+        let path = url.substr(1) || 'home';
         return path;
     }
 
@@ -51,7 +51,7 @@ class PageProxy extends Component {
         let pagePath = path;
         let loadPage = this.state[pagePath]
                 ? false
-                : import(/* webpackMode: "lazy", webpackChunkName: "[request]" */ `&/containers/${pagePath}`);
+                : import(/* webpackMode: 'lazy', webpackChunkName: '[request]' */ `&/pages/${pagePath}`);
         Promise.all([loadPage]).then(([PageComponent]) => {
             let needUpdate = false;
             let updateData = {};

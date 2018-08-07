@@ -1,16 +1,21 @@
-import React from "react"
-import Header from "&/components/common/header"
+import React from 'react';
+import Header from './Layout/Header';
+import Sidbar from './Layout/Sidbar';
+import Content from './Layout/Content';
 
-import "./base.scss"
-import "../style/index.css"
-//app入口
-const App = (props:any) => {
+import './base.scss';
+import '&/style/index.css';
+
+interface Props {
+    children: React.ReactNode
+}
+const App: React.SFC<Props> = (props) => {
     return (
-        <div className="container">
+        <div className='container'>
             <Header />
-            <section>{props.children}</section>
+            <Sidbar />
+            <Content {...props}/>
         </div>
     )
 }
-
-export default App
+export default App;
