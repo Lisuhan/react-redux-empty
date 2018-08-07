@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import App from "&/App";
 
-const tabPattern = "/~/";
+const tabPattern = '/~/';
 const currentPage = "$$currentPage";
 const df = "default";
 

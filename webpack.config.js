@@ -49,6 +49,15 @@ module.exports = {
                 exclude: /node_modules/,
             },
             {
+                test: /\.(jsx)?$/,
+                exclude: [/node_modules/],
+                enforce: 'pre',
+                loader: 'eslint-loader',
+                options: {
+                    fix: true 
+                }
+            },
+            {
                 test: /\.(ts|tsx)$/,
                 loader: "awesome-typescript-loader",
                 options: {
