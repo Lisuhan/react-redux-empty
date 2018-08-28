@@ -1,32 +1,30 @@
 {
-    "compilerOptions": {
-      "module": "esnext",
-      "target": "esnext",
-      "lib": ["es7", "dom"],
-      "sourceMap": true,
-      "allowJs": true,
-      "jsx": "preserve",
-      "moduleResolution": "node",
-      "forceConsistentCasingInFileNames": true,
-      "allowSyntheticDefaultImports":true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noImplicitAny": true,
-      "experimentalDecorators": true,
-      "strictNullChecks": true,
-      "suppressImplicitAnyIndexErrors": true,
-      "noUnusedLocals": true,
-      "baseUrl": "src",
-      "paths": {
-        "&/*": ["*"]
-      }
-    }  
-    ,"exclude": [
-        "node_modules",
-        "dist",
-        "extras",
-        "webpack"
-      ]
-    
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "lib": ["es7", "dom"],
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports":true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "baseUrl": "src",
+    "paths": {
+      "&/*": ["*"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "extras",
+    "webpack"
+  ]
 }
-  
