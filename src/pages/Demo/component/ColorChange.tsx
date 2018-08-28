@@ -1,24 +1,21 @@
-import React, { Component } from "react"
+import React, { Component } from 'react'
 
 interface Props{
-    data:any,
-    actions:any
+    data: any,
+    actions: any
 }
 class ColorChange extends Component<Props, {}> {
-    constructor(props:Props) {
+    constructor(props: Props) {
         super(props)
     }
 
     render(): JSX.Element {
-        const { colorCollection, isFetching } = this.props.data,
-            color =
-                colorCollection[
-                    Math.ceil(Math.random() * (colorCollection.length - 1))
-                ]
+        const { colorCollection, isFetching } = this.props.data;
+        const color = colorCollection[Math.ceil(Math.random() * (colorCollection.length - 1))]
 
         const style = {
-            width: "200px",
-            height: "200px",
+            width: '200px',
+            height: '200px',
             backgroundColor: color,
         }
         return isFetching ? (
@@ -30,7 +27,7 @@ class ColorChange extends Component<Props, {}> {
             </div>
         )
     }
-    changeColorHandler = (e:React.MouseEvent<HTMLButtonElement>)=> {
+    changeColorHandler = (e: React.MouseEvent<HTMLButtonElement>)=> {
         this.props.actions.fetch_ColorChangeHandler()
     }
     componentDidMount() {

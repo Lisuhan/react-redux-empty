@@ -1,8 +1,8 @@
-import React from "react"
-import { connect } from "react-redux"
-import ColorChange from "./component/ColorChange"
-import Actions from "./store"
-import { bindActionCreators } from "redux"
+import React from 'react';
+import { connect } from 'react-redux';
+import ColorChange from './component/ColorChange';
+import Actions from './store';
+import { bindActionCreators } from 'redux';
 //路由下的App文件
 const Demo = (props: any) => {
     return <ColorChange {...props} />

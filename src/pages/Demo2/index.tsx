@@ -1,4 +1,4 @@
-import React, { Component, PureComponent } from "react"
+import React, { Component, PureComponent } from 'react'
 
 export default class Parent extends Component {
     render() {

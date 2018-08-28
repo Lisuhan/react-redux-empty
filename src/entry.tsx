@@ -14,13 +14,12 @@ const store = createStore(
     applyMiddleware(thunk) //middleware
 );
 
-
 ReactDOM.render(
 	<Provider store = {store}>
         <Router>
             <Switch>
-                <Route path="/"  exact component={App}/>
-                <Route path="/:route" component={PageProxy}/>
+                <Route path='/'  exact component={App}/>
+                <Route path='/:route' component={PageProxy}/>
             </Switch>
         </Router>
 	</Provider>,

@@ -1,8 +1,8 @@
-import * as actionTypes from "./actionTypes"
+import * as actionTypes from './actionTypes'
 
 export function fetch_ColorChangeHandler(param: any) {
     return (dispatch: any, getState: any) => {
-        const url = "http://localhost:3000/colorCollection"
+        const url = '/colorCollection'
         dispatch({
             type: actionTypes.CHANGE_COLOR_REQUEST,
         })

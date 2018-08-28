@@ -1,5 +1,5 @@
-import * as actionsTypes from "./actionTypes"
-import Immutable from "immutable"
+import * as actionsTypes from './actionTypes'
+import Immutable from 'immutable'
 
 let defaultState = Immutable.fromJS({
     isFetching: false,
@@ -11,14 +11,14 @@ export default function Color(state = defaultState, action: any) {
 
     switch (type) {
         case actionsTypes.CHANGE_COLOR_REQUEST:
-            return state.update("isFetching", () => true)
+            return state.update('isFetching', () => true)
         case actionsTypes.CHANGE_COLOR_SUCCESS:
             const colorCollection = action.response
             return state
-                .update("colorCollection", (v: any) =>
+                .update('colorCollection', (v: any) =>
                     Immutable.fromJS(colorCollection)
                 )
-                .update("isFetching", () => {
+                .update('isFetching', () => {
                     return false
                 })
         case actionsTypes.CHANGE_COLOR_FAILURE:
