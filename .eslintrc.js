@@ -59,7 +59,13 @@ module.exports = {
         'jsx-a11y/click-events-have-key-events': 0,
         'jsx-a11y/anchor-is-valid': 0,
         'react/no-danger': 0,
-        'comma-dangle': ['error', 'always-multiline'],
+        "comma-dangle": ["error", {
+            "arrays": "only-multiline",
+            "objects": "only-multiline",
+            "imports": "only-multiline",
+            "exports": "only-multiline",
+            "functions": "only-multiline"
+        }],
         'function-paren-newline': 0,
         'object-curly-newline': 0,
         'no-restricted-globals': 0,

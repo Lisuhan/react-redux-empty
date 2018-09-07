@@ -44,8 +44,7 @@ class PageProxy extends Component {
 		console.log(msg, err);
 	}
 
-	loadAsyncPages = (path) => {
-		const pagePath = path;
+	loadAsyncPages = (pagePath) => {
 		const loadPage = this.state[pagePath]
 			? false
 			: import(/* webpackMode: 'lazy', webpackChunkName: '[request]' */ `&/pages/${pagePath}`);

@@ -50,7 +50,7 @@ module.exports = {
 		},
 		{
 			test: /\.(jsx)?$/,
-			exclude: [/node_modules/],
+			exclude: /node_modules/,
 			enforce: 'pre',
 			loader: 'eslint-loader',
 			options: {
@@ -64,7 +64,13 @@ module.exports = {
 				useBabel: true,
 				useCache: true,
 			},
+			exclude: /node_modules/
+		},
+		{
+			test: /\.tsx?$/,
 			exclude: /node_modules/,
+			enforce: 'pre',
+			loader: 'tslint-loader'
 		},
 		{
 			test: /\.css$/,
@@ -88,11 +94,11 @@ module.exports = {
 		},
 		{
 			test: /\.(png|jpg|gif)$/, // 图片加载器，同file-loader，更适合图片，可以将较小的图片转成base64，减少http请求
-			use: 'url-loader?limit=8192&name=./images/[hash:5].[name].[ext]', // 将小于8192byte的图片转成base64码
+			use: 'url-loader?limit=8192&name=./images/[hash:6].[name].[ext]', // 将小于8192byte的图片转成base64码
 		},
 		{
 			test: /\.(woff|woff2|svg|eot|ttf)\??.*$/,
-			use: 'file-loader?name=./fonts/[hash:5].[name].[ext]',
+			use: 'file-loader?name=./fonts/[hash:6].[name].[ext]',
 		},
 		],
 	},
@@ -104,7 +110,7 @@ module.exports = {
 	},
 	output: {
 		filename: '[name].bundle.js',
-		chunkFilename: '[name].[chunkhash:5].chunk.js',
+		chunkFilename: '[name].[chunkhash:6].chunk.js',
 		path: path.resolve(__dirname, 'dist/'),
 	},
 	devServer: {
